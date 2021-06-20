@@ -1,22 +1,13 @@
 package myapp.cadastros;
 
-public class Cadastro {
+public class Cadastro extends Endereco {
 	//tipo + identificador = valor é opcional
 	private Integer id;
 	private String nome;
 	private Long telefone;
 	private String email;
-	private String endereco;
 	private String cpfCnpj;
 	
-	
-	
-	public String getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
 	public String getCpfCnpj() {
 		return cpfCnpj;
 	}

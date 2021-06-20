@@ -28,7 +28,7 @@ public class Application {
 		p1.setFaixa(10);
 		p1.setArtista(artista);
 		
-		artista = FabricaCadastro.criarCadastro("PINK FLOYD", null, 989089090L);
+		artista = FabricaCadastro.criarCadastro("PINK FLOYD", "b@b", 989089090L);
 		
 		CD p2 = new CD(); // Livro()
 		p2.setCodigoBarras("989789789");
@@ -37,21 +37,25 @@ public class Application {
 		p2.setFaixa(8);
 		p2.setArtista(artista);
 		
-		Empresa empresa = new Empresa(908908L, 908098L);
+		Empresa empresa = new Empresa(99999999L, 999999999L);
 		Cadastro cadEmpresa = new Cadastro();
 		cadEmpresa.setCpfCnpj("123456789000001");
 		cadEmpresa.setNome("IFOOD PEDIDOS");
 		cadEmpresa.setEmail("pedidos@pedidos.com");
-		cadEmpresa.setEndereco("Rua Inácio de Nobrega, 1036, Centro - SP");
+		cadEmpresa.setLogradouro("Rua Inácio de Nobrega,");
+		cadEmpresa.setNumero(1036);
+		cadEmpresa.setBairro("Centro");
+		cadEmpresa.setUf("SP");
 		cadEmpresa.setTelefone(11987654321L);
 		empresa.setCadastro(cadEmpresa);
 		
 		Pedido pedido = new Pedido();
 		pedido.setEmpresa(empresa);
-		Cadastro comprador = FabricaCadastro.criarCadastro("GLEYSON", "b@b", 89678789L);
+		Cadastro comprador = FabricaCadastro.criarCadastro("GLEYSON", "c@c", 89678789L);
 		
 		pedido.setComprador(comprador);
-		pedido.setData(new Date(2021,6,16));
+		//pedido.setData(new Date(2021,06,16));
+		pedido.setData(new Date());
 		pedido.setValorTotal(325.0);
 		pedido.setId(23234);
 		

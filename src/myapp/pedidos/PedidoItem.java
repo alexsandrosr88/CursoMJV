@@ -8,6 +8,7 @@ public class PedidoItem {
 	private Double valorVenda;
 	private Double valorTotal;
 	private Produto produto;
+	
 	public Produto getProduto() {
 		return produto;
 	}
