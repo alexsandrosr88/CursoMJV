@@ -14,7 +14,25 @@ public class Pedido {
 	private Integer ccf;
 	private Integer coo;
 	private Empresa empresa;
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 	
+	public Integer getCcf() {
+		return ccf;
+	}
+	public void setCcf(Integer ccf) {
+		this.ccf = ccf;
+	}
+	public Integer getCoo() {
+		return coo;
+	}
+	public void setCoo(Integer coo) {
+		this.coo = coo;
+	}
 	public Cadastro getComprador() {
 		return comprador;
 	}
@@ -47,25 +65,5 @@ public class Pedido {
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
-	public Integer getCcf() {
-		return ccf;
-	}
-	public void setCcf(Integer ccf) {
-		this.ccf = ccf;
-	}
-	public Integer getCoo() {
-		return coo;
-	}
-	public void setCoo(Integer coo) {
-		this.coo = coo;
-	}
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-	
-	
 	
 }

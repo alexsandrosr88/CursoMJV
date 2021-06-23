@@ -1,4 +1,4 @@
-
+package fundamentos;
 
 public class Estudo1 {
 	

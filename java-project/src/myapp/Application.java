@@ -7,6 +7,7 @@ import java.util.List;
 import myapp.cadastros.CD;
 import myapp.cadastros.Cadastro;
 import myapp.cadastros.Empresa;
+import myapp.cadastros.Endereco;
 import myapp.factory.FabricaCadastro;
 import myapp.pedidos.Pedido;
 import myapp.pedidos.PedidoItem;
@@ -28,7 +29,7 @@ public class Application {
 		p1.setFaixa(10);
 		p1.setArtista(artista);
 		
-		artista = FabricaCadastro.criarCadastro("PINK FLOYD", "b@b", 989089090L);
+		artista = FabricaCadastro.criarCadastro("PINK FLOYD", null, 989089090L);
 		
 		CD p2 = new CD(); // Livro()
 		p2.setCodigoBarras("989789789");
@@ -37,27 +38,35 @@ public class Application {
 		p2.setFaixa(8);
 		p2.setArtista(artista);
 		
-		Empresa empresa = new Empresa(99999999L, 999999999L);
+		
+		Empresa empresa = new Empresa(172648678l, 98765432l);
 		Cadastro cadEmpresa = new Cadastro();
-		cadEmpresa.setCpfCnpj("123456789000001");
+		cadEmpresa.setCpfCnpj("12345678900001");
+		cadEmpresa.setEmail("pedidos@.pedidos.com");
+		//cadEmpresa.setEndereco("Rua inacio de nobrega,  1036, centro - SP");
 		cadEmpresa.setNome("IFOOD PEDIDOS");
-		cadEmpresa.setEmail("pedidos@pedidos.com");
-		cadEmpresa.setLogradouro("Rua Inácio de Nobrega,");
-		cadEmpresa.setNumero(1036);
-		cadEmpresa.setBairro("Centro");
-		cadEmpresa.setUf("SP");
 		cadEmpresa.setTelefone(11987654321L);
 		empresa.setCadastro(cadEmpresa);
 		
+		Endereco end = new Endereco();
+		end.setBairro("CENTRO");
+		end.setCep(34567890L);
+		end.setCidade("TERESINA");
+		end.setUf("PI");
+		end.setLogradouro("AN NOSSA SENHORA");
+		end.setNumero("S/N");
+		cadEmpresa.setEndereco(end);
+		
 		Pedido pedido = new Pedido();
 		pedido.setEmpresa(empresa);
-		Cadastro comprador = FabricaCadastro.criarCadastro("GLEYSON", "c@c", 89678789L);
+		Cadastro comprador = FabricaCadastro.criarCadastro("GLEYSON", "b@b", 89678789L);
 		
 		pedido.setComprador(comprador);
-		//pedido.setData(new Date(2021,06,16));
-		pedido.setData(new Date());
+		pedido.setData(new Date(2021,6,16));
 		pedido.setValorTotal(325.0);
 		pedido.setId(23234);
+		pedido.setCcf(25);
+		pedido.setCoo(280);
 		
 		List<PedidoItem> itens = new ArrayList<>();
 		PedidoItem item = new PedidoItem();
@@ -78,8 +87,7 @@ public class Application {
 		
 		pedido.setItens(itens);
 		
-		PrintApp.imprimirPedido(pedido);
-
-	}
+		PrinterApp.imprimirPedido(pedido);
 	
+	}
 }

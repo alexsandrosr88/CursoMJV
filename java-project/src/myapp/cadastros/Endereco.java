@@ -1,23 +1,31 @@
 package myapp.cadastros;
 
-//Logrado, numero, Bairro, Cidade, Sigla Estado
 public class Endereco {
+	//8 digitos - 0
+	//para ajudar + na formatacao
+	private Long cep;
 	private String logradouro;
-	private Integer numero;
+	private String numero ;//SN
 	private String bairro;
+	//estes dois atributos podem ser uma entidade adicional como o isaque fez
 	private String cidade;
 	private String uf;
-	
+	public Long getCep() {
+		return cep;
+	}
+	public void setCep(Long cep) {
+		this.cep = cep;
+	}
 	public String getLogradouro() {
 		return logradouro;
 	}
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-	public Integer getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(Integer numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public String getBairro() {
@@ -38,4 +46,6 @@ public class Endereco {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+	
+	
 }
