@@ -57,6 +57,7 @@ public class Application {
 		end.setNumero("S/N");
 		cadEmpresa.setEndereco(end);
 		
+		
 		Pedido pedido = new Pedido();
 		pedido.setEmpresa(empresa);
 		Cadastro comprador = FabricaCadastro.criarCadastro("GLEYSON", "b@b", 89678789L);

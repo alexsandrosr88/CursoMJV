@@ -22,29 +22,52 @@ public class CadastroDao {
 		try {
 			String sql = "INSERT INTO cadastro (nome,telefone) VALUES (?,?);";
 			PreparedStatement st = cnn.prepareStatement(sql);
-			st.setString(1, cadastro.getNome());
-			st.setLong(2, cadastro.getTelefone());
-			st.execute();
+			st.setString(1, String.valueOf(cadastro.getPf_pj()));
+			st.setString(2, cadastro.getRazao_social());
+			st.setString(3, cadastro.getCpf_cnpj());
+			st.setLong(4, cadastro.getTelefone1());
+			st.setLong(5, cadastro.getTelefone2());
+			st.setString(6, cadastro.getEmail());
+			st.setString(7, cadastro.getObservacoes());
+			st.setString(8, cadastro.getEndereco().getLogradouro());
+			st.setString(9, cadastro.getEndereco().getNumero());
+			st.setString(10, cadastro.getEndereco().getBairro());
+			st.setString(11, cadastro.getEndereco().getCidade());
+			st.setString(12, String.valueOf(cadastro.getEndereco().getUf()));
+			st.setString(13, String.valueOf(cadastro.getEndereco().getCep()));
+			st.executeUpdate();
+			st.close();
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Ocorreu um erro durante inclusão dos dados.\n" + e);
 		}
 	}
 
 	// IMPLEMENTAR
 	public void alterar(Cadastro cadastro) {
 		try {
-			String sql = "UPDATE cadastro SET nome = ?, SET telefone = ? WHERE id =?";
+			String sql = "UPDATE cadastro SET nome = ?, telefone = ? WHERE id =?";
 			PreparedStatement st = cnn.prepareStatement(sql);
 
-			st.setString(1, cadastro.getNome());
-			st.setLong(2, cadastro.getTelefone());
-			st.setInt(3, cadastro.getId());
-			st.execute();
+			st.setString(1, String.valueOf(cadastro.getPf_pj()));
+			st.setString(2, cadastro.getRazao_social());
+			st.setString(3, cadastro.getCpf_cnpj());
+			st.setLong(4, cadastro.getTelefone1());
+			st.setLong(5, cadastro.getTelefone2());
+			st.setString(6, cadastro.getEmail());
+			st.setString(7, cadastro.getObservacoes());
+			st.setString(8, cadastro.getEndereco().getLogradouro());
+			st.setString(9, cadastro.getEndereco().getNumero());
+			st.setString(10, cadastro.getEndereco().getBairro());
+			st.setString(11, cadastro.getEndereco().getCidade());
+			st.setString(12, String.valueOf(cadastro.getEndereco().getUf()));
+			st.setString(13, String.valueOf(cadastro.getEndereco().getCep()));
+			st.executeUpdate();
 
-			cnn.close();
+			st.close();
 
 		} catch (SQLException e) {
-			System.err.println("Ocorreu um erro durante exclusão do dado.\n" + e);
+			System.err.println("Ocorreu um erro durante alteração dos dados.\n" + e);
 		}
 
 	}
@@ -61,7 +84,7 @@ public class CadastroDao {
 			cnn.close();
 
 		} catch (SQLException e) {
-			System.err.println("Ocorreu um erro durante exclusão do dado.\n" + e);
+			System.err.println("Ocorreu um erro durante exclusão do dado ID:\n" +id + "\n" + e);
 		}
 	}
 
@@ -72,19 +95,20 @@ public class CadastroDao {
 			
 			String sql = "SELECT * FROM cadastro";
 			
-			PreparedStatement stmt = cnn.prepareStatement(sql);
-			ResultSet rst = stmt.executeQuery();
+			PreparedStatement st = cnn.prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
 
-			while (rst.next()) {
+			while (rs.next()) {
 
 				Cadastro cadastro = new Cadastro();
-				cadastro.setId(rst.getInt("id"));
-				cadastro.setNome(rst.getString("nome"));
-				cadastro.setTelefone(rst.getLong("telefone"));
+				cadastro.setId(rs.getInt("id"));
+				cadastro.setNome(rs.getString("nome"));
+				cadastro.setTelefone(rs.getLong("telefone"));
 
 				listaCadastro.add(cadastro);
 			}
-			stmt.close();
+			st.close();
+			
 			return listaCadastro;
 			
 
@@ -94,20 +118,51 @@ public class CadastroDao {
 		return null;
 		
 	}
-
-	public Cadastro buscar(String nome) {
+	
+	public List<Cadastro> busca(String nome) {
 		try {
-			String sql = "SELECT * FROM cadastro WHERE nome ?";
+			List<Cadastro> listaCadastro = new ArrayList<Cadastro>();
+			
+			String sql = "SELECT * FROM cadastro WHERE nome = ?";
+			
+			PreparedStatement st = cnn.prepareStatement(sql);
+			st.setString(1, nome);
+			ResultSet rs = st.executeQuery();
+			
 
-			PreparedStatement stmt = cnn.prepareStatement(sql);
-			stmt.setString(1, nome);
+			while (rs.next()) {
 
-			ResultSet rs = stmt.executeQuery();
+				Cadastro cadastro = new Cadastro();
+				cadastro.setId(rs.getInt("id"));
+				cadastro.setRazao_social(rs.getString("nome"));
+				cadastro.setTelefone1(rs.getLong("telefone"));
 
-			Cadastro cadastro = new Cadastro();
+				listaCadastro.add(cadastro);
+			}
+			st.close();
+			
+			return listaCadastro;
+			
 
-			if (rs.next()) {
+		} catch (SQLException e) {
+			System.err.println("Ocorreu um erro durante montagem da lista de cadastro.\n" + e);
+		}
+		return null;
 
+	}
+
+	public Cadastro buscarNome(String nome) {
+		Cadastro cadastro = null;
+		try {
+			String sql = "SELECT * FROM cadastro WHERE nome = ?";
+
+			PreparedStatement st = cnn.prepareStatement(sql);
+			st.setString(1, nome);
+
+			ResultSet rs = st.executeQuery();
+
+			while(rs.next()) {
+				cadastro = new Cadastro();
 				cadastro.setId(rs.getInt("id"));
 				cadastro.setNome(rs.getString("nome"));
 				cadastro.setTelefone(rs.getLong("telefone"));
@@ -116,10 +171,51 @@ public class CadastroDao {
 			return cadastro;
 
 		} catch (SQLException e) {
-			System.err.println("Ocorreu um erro durante pesquisa pelo nome.\n" + e);
+			System.err.println("Ocorreu um erro ao realizar pesquisa pelo nome.\n"+ nome + e);
 		}
 		return null;
 
+	}
+	
+	public Cadastro buscarId(Integer id) {
+		Cadastro cadastro = null;
+		try {
+			String sql= "SELECT * FROM cadastro WHERE id = ?";
+			PreparedStatement st = cnn.prepareStatement(sql);
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				cadastro = new Cadastro();
+				cadastro.setId(rs.getInt("id"));
+				cadastro.setNome(rs.getString("nome"));
+				cadastro.setTelefone(rs.getLong("telefone"));
+			}
+			
+			st.close();
+		} catch (SQLException e) {
+			System.err.println("Ocorreu um erro durante pesquisa pelo id:\n"+ id + e);
+		}
+		return  cadastro;
+	}
+	
+	
+	public boolean existsByNome(String nome) {
+		boolean exists = false;
+		try {
+			String sql= "SELECT * FROM cadastro WHERE nome = ?";
+			PreparedStatement st = cnn.prepareStatement(sql);
+			st.setString(1, nome);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				return true;
+
+			}
+			st.close();
+						
+		} catch (SQLException e) {
+			System.err.println("Ocorreu um erro durante pesquisa pelo nome.\n"+ nome + e);
+		}
+		return  exists;
 	}
 
 }
