@@ -5,7 +5,7 @@ public class Endereco {
 	private String numero;
 	private String complemento;
 	private String bairro;
-	private char uf;
+	private	Character uf;
 	private String cidade;
 	private char cep;
 	
@@ -33,10 +33,10 @@ public class Endereco {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	public char getUf() {
+	public Character getUf() {
 		return uf;
 	}
-	public void setUf(char uf) {
+	public void setUf(Character uf) {
 		this.uf = uf;
 	}
 	public String getCidade() {

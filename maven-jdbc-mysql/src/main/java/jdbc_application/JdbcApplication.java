@@ -83,43 +83,54 @@ public class JdbcApplication {
 
 	private static void IncluiCadastro() {
 		Scanner sc = new Scanner(System.in);
-		String nome = "";
-		Long telefone;
+		String razao_social = "", cpf_cnpj = "", email = "", obs = "", site_instragram = "",logradouro = "", numero = "", complemento = "", bairro = "", cidade = "";
+		Long telefone1,telefone2;
+		Character pf_pj, uf, cep;
 		int opcao;
 
 		CadastroDao dao = new CadastroDao();
 		Cadastro cadastro = new Cadastro();
 
 		System.out.println("\nVocê informe o nome para incluir no cadastro:");
-		nome = sc.next();
+		razao_social = sc.next();
 		
-		if(!(dao.existsByNome(nome))) {
+		if(!(dao.existsByNome(razao_social))) {
 			
-			cadastro.setRazao_social(nome);
+			cadastro.setRazao_social(razao_social);
 
-			System.out.println("\nVocê informe o telefone para incluir no cadastro:");
-			telefone = sc.nextLong();
+			System.out.println("\nInforme se é pessoa física ou jurídica com (F) de física ou (J) judiríca. ");
+				pf_pj = sc.next().charAt(0);
+				
+				if (pf_pj.equals("") && pf_pj.equals("F") || pf_pj.equals("J")) {
+					System.out.println("Você deve informar se é pessoa física ou jurídica com (F) de física ou (J) judiríca.");
+				}
+				else 
+					cadastro.setPf_pj(pf_pj);
+				
+				
+			System.out.println("\nInforme o telefone para incluir no cadastro:");
+			telefone1 = sc.nextLong();
 
-			cadastro.setTelefone1(telefone);
+			cadastro.setTelefone1(telefone1);
 
 			dao.incluir(cadastro);
 
 			System.out.println("Cadastro incluído com sucesso!");
 		}
 		else {
-			System.out.println("\nO nome "+ nome+ " já existe!\nDeseja incluir o nome mesmo assim?\n\n1-Sim  2-Não");
+			System.out.println("\nO nome "+ razao_social+ " já existe!\nDeseja incluir o nome mesmo assim?\n\n1-Sim  2-Não");
 				opcao = sc.nextInt();
 				
 				if (opcao == 1) {
 					
-					cadastro.setRazao_social(nome);
+					cadastro.setRazao_social(razao_social);
 					
 					System.out.println("\nO nome foi incluído!\n\nAgora...\n");
 
 					System.out.println("Você informe o telefone para incluir no cadastro:");
-					telefone = sc.nextLong();
+					telefone1 = sc.nextLong();
 
-					cadastro.setTelefone1(telefone);
+					cadastro.setTelefone1(telefone1);
 
 					dao.incluir(cadastro);
 
@@ -222,8 +233,8 @@ public class JdbcApplication {
 
 		for (Cadastro i : lista) {
 			StringBuilder sb = new StringBuilder();
-			sb.append(String.format("ID: %d | Nome: %s | Telefone: %d\n", i.getId(), i.getRazao_social(),
-					i.getTelefone1()));
+			sb.append(String.format("ID: %d | Razao_social: %s | Tipo de pessoa: %s | Telefone: %d\n | Uf %s\n", i.getId(), i.getRazao_social(),
+					i.getPf_pj(), i.getTelefone1(), i.getEndereco().getUf()));
 			System.out.println(sb.toString());
 		}
 	}

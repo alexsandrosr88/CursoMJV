@@ -9,6 +9,7 @@ import java.util.List;
 
 import connection.FabricaConexao;
 import model.Cadastro;
+import model.Endereco;
 
 public class CadastroDao {
 	private Connection cnn;
@@ -20,7 +21,7 @@ public class CadastroDao {
 
 	public void incluir(Cadastro cadastro) {
 		try {
-			String sql = "INSERT INTO cadastro (nome,telefone) VALUES (?,?);";
+			String sql = "call novo_cad (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 			PreparedStatement st = cnn.prepareStatement(sql);
 			st.setString(1, String.valueOf(cadastro.getPf_pj()));
 			st.setString(2, cadastro.getRazao_social());
@@ -93,7 +94,7 @@ public class CadastroDao {
 		try {
 			List<Cadastro> listaCadastro = new ArrayList<Cadastro>();
 			
-			String sql = "SELECT * FROM cadastro";
+			String sql = "SELECT * FROM cadastro INNER JOIN endereco ON fk_endereco = id_endereco";
 			
 			PreparedStatement st = cnn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
@@ -101,10 +102,26 @@ public class CadastroDao {
 			while (rs.next()) {
 
 				Cadastro cadastro = new Cadastro();
-				cadastro.setId(rs.getInt("id"));
-				cadastro.setNome(rs.getString("nome"));
-				cadastro.setTelefone(rs.getLong("telefone"));
-
+				Endereco end = new Endereco();
+				cadastro.setId(rs.getInt("codigo"));
+				cadastro.setPf_pj(rs.getString("pf_pj").charAt(0));
+				cadastro.setRazao_social(rs.getString("razao_social"));
+				cadastro.setCpf_cnpj(rs.getString("cpf_cnpj"));
+				cadastro.setTelefone1(rs.getLong("telefone1"));
+				cadastro.setTelefone2(rs.getLong("telefone2"));
+				cadastro.setEmail(rs.getString("email"));
+				cadastro.setObservacoes(rs.getString("obs"));
+				cadastro.setSite_instagram(rs.getString("site_instagram"));
+				end.setLogradouro(rs.getString("logradouro"));
+				end.setNumero(rs.getString("numero"));
+				end.setComplemento(rs.getString("complemento"));
+				end.setBairro(rs.getString("bairro"));
+				end.setCidade(rs.getString("cidade"));
+				end.setUf(rs.getString("uf").charAt(0));
+				end.setCep(rs.getString("cep").charAt(0));
+				cadastro.setEndereco(end);
+			
+			
 				listaCadastro.add(cadastro);
 			}
 			st.close();
@@ -164,8 +181,8 @@ public class CadastroDao {
 			while(rs.next()) {
 				cadastro = new Cadastro();
 				cadastro.setId(rs.getInt("id"));
-				cadastro.setNome(rs.getString("nome"));
-				cadastro.setTelefone(rs.getLong("telefone"));
+				cadastro.setRazao_social(rs.getString("nome"));
+				cadastro.setTelefone1(rs.getLong("telefone"));
 			}
 
 			return cadastro;
@@ -187,8 +204,8 @@ public class CadastroDao {
 			while(rs.next()) {
 				cadastro = new Cadastro();
 				cadastro.setId(rs.getInt("id"));
-				cadastro.setNome(rs.getString("nome"));
-				cadastro.setTelefone(rs.getLong("telefone"));
+				cadastro.setRazao_social(rs.getString("nome"));
+				cadastro.setTelefone1(rs.getLong("telefone"));
 			}
 			
 			st.close();
