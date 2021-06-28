@@ -3,7 +3,7 @@ use mjv_db;
 	
 	
     create table endereco(
-    id_endereco integer NOT null PRIMARY KEY,
+    id_endereco integer not null auto_increment PRIMARY KEY,
     logradouro varchar (50) NOT NULL,
     numero varchar (6) NOT NULL,
     complemento varchar (30) NOT NULL,
@@ -14,7 +14,7 @@ use mjv_db;
     
     
     CREATE TABLE cadastro (
-	codigo integer NOT null PRIMARY KEY,
+	codigo integer not null auto_increment PRIMARY KEY,
 	pf_pj char(1) NOT NULL,
 	razao_social varchar (50) NOT NULL,
 	cpf_cnpj varchar (14) NOT null, 
@@ -26,7 +26,6 @@ use mjv_db;
 	fk_endereco integer,
     FOREIGN KEY (fk_endereco) REFERENCES endereco (id_endereco));
     
-    drop procedure novo_cad;
     
 delimiter $$
 create procedure novo_cad (
@@ -39,4 +38,3 @@ create procedure novo_cad (
     end $$
         
 call novo_cad('F','Alexsandro','11111111111111',11111111111,22222222222,'fulando@email.com','Observações','fulando@instagram','Avenida algum lugar','1','Complemento','Bairro','São Paulo','SP','5547025');
-    
